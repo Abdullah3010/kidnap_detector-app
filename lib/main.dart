@@ -45,7 +45,6 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp.router(
       title: 'Kidnap Detection App',
       debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
       builder: (BuildContext context, Widget? child) {
         return child ?? ReportListScrren();
       },

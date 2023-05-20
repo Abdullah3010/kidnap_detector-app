@@ -35,30 +35,83 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
     print(widget.caseNumber);
     print(constant.kidnapCases[widget.caseNumber]?.kidnapVideo.length);
 
-    if (constant.kidnapCases[widget.caseNumber]?.kidnapVideo.isNotEmpty ?? false) {
-      Timer.periodic(
-        Duration(milliseconds: 500),
-        (timer) {
-          if (constant.kidnapCases[widget.caseNumber]?.kidnapVideo.length == framNumber - 1) {
-            timer.cancel();
-          }
-          setState(() {
-            framNumber++;
-          });
-        },
-      );
+    if (framNumber == 0) {
+      if (constant.kidnapCases[widget.caseNumber]?.kidnapVideo.isNotEmpty ?? false) {
+        Timer.periodic(
+          Duration(milliseconds: 50),
+          (timer) {
+            print("Timmmer =======> $framNumber");
+            print("Timmmer =======> ${constant.kidnapCases[widget.caseNumber]?.kidnapVideo.length}");
+            if ((constant.kidnapCases[widget.caseNumber]?.kidnapVideo.length ?? 0) - 1 == framNumber) {
+              timer.cancel();
+            } else {
+              setState(() {
+                framNumber++;
+              });
+            }
+          },
+        );
+      }
     }
     return Scaffold(
       appBar: AppBar(
         title: Text('Kidnap case ${widget.caseNumber}'),
       ),
-      body: constant.kidnapCases[widget.caseNumber]?.kidnapVideo.isEmpty ?? true
-          ? CircularProgressIndicator()
-          : Center(
-              child: Image.memory(
-                constant.kidnapCases[widget.caseNumber]!.kidnapVideo[framNumber],
+      body: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              constant.kidnapCases[widget.caseNumber]?.kidnapVideo.isEmpty ?? true
+                  ? CircularProgressIndicator()
+                  : SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                      // height: 300,
+                      child: Center(
+                        child: Image.memory(
+                          constant.kidnapCases[widget.caseNumber]!.kidnapVideo[framNumber],
+                        ),
+                      ),
+                    ),
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: MaterialButton(
+                  color: Colors.blue,
+                  onPressed: () {},
+                  padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                  child: Text(
+                    "Next",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Center(
+            child: SizedBox(
+              height: 300,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text("fuck ${constant.kidnapCases[widget.caseNumber]?.carNumber}"),
+                  MaterialButton(
+                    onPressed: () {},
+                    child: Text("Show Persons"),
+                  ),
+                  MaterialButton(
+                    onPressed: () {},
+                    child: Text("Show cars"),
+                  ),
+                ],
               ),
             ),
+          ),
+        ],
+      ),
     );
   }
 }

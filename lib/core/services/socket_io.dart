@@ -27,8 +27,7 @@ class SocketService {
           data['Case number']: KidnapCaseModel(
             caseNumber: data['Case number'],
             cameraId: data['Camera id'],
-            involvedPeople: data['Involved people'],
-            usedCar: data['Used car'],
+            carNumber: data['Car license'],
           ),
         });
         constant.updateReportList?.call(() {});
@@ -61,7 +60,7 @@ class SocketService {
   void getKidnapCaseDetails({
     required int caseNumber,
   }) {
-    socket.emit('get_case_details', caseNumber);
+    socket.emit('play_video', caseNumber);
   }
 
   void sendToSocket({
