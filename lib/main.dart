@@ -3,12 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:kidnap_detection_app/core/navigation/module.dart';
 import 'package:kidnap_detection_app/modules/test_flask/test_flask_screen.dart';
+import 'package:provider/provider.dart';
+
+import 'modules/camera_view/controller/kidnap_provider.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       systemNavigationBarIconBrightness: Brightness.dark,
@@ -19,9 +21,14 @@ void main() async {
   );
 
   runApp(
-    ModularApp(
-      module: AppModule(),
-      child: const MyApp(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => KidnapResults()),
+      ],
+      child: ModularApp(
+        module: AppModule(),
+        child: const MyApp(),
+      ),
     ),
   );
 }
