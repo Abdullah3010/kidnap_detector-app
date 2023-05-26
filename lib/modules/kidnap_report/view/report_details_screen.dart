@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:kidnap_detection_app/core/constant/constant.dart';
 import 'package:kidnap_detection_app/core/services/socket_io.dart';
+import 'package:kidnap_detection_app/modules/kidnap_report/view/persons_details.dart';
 
 class ReportDetailsScreen extends StatefulWidget {
   ReportDetailsScreen({
@@ -99,11 +100,20 @@ class _ReportDetailsScreenState extends State<ReportDetailsScreen> {
                 children: [
                   Text("fuck ${constant.kidnapCases[widget.caseNumber]?.carNumber}"),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      sNavigation.showPepole(caseNumber: widget.caseNumber);
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PersonsDetails(caseNumber: widget.caseNumber),
+                        ),
+                      );
+                    },
                     child: Text("Show Persons"),
                   ),
                   MaterialButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      sNavigation.showCars(caseNumber: widget.caseNumber);
+                    },
                     child: Text("Show cars"),
                   ),
                 ],

@@ -5,4 +5,6 @@ class Constant {
 
   void Function(void Function())? updateReportList;
   void Function(void Function())? updatedkidnapDetails;
+  void Function(void Function())? updatedPerson;
+  void Function(void Function())? updatedCars;
 }

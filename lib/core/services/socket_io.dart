@@ -46,6 +46,30 @@ class SocketService {
       },
     );
 
+    socket.on(
+      'show_people',
+      (data) {
+        // print("===============> ${data['frame']}");
+        var frame = deserialize(data['people']);
+        constant.kidnapCases[data['case_number']]?.persons.add(frame);
+        print("===============> 1${constant.kidnapCases[data['case_number']]}");
+        // print("===============> 2${frame.lengt}");
+        constant.updatedPerson?.call(() {});
+      },
+    );
+
+    socket.on(
+      'show_cars',
+      (data) {
+        // print("===============> ${data['frame']}");
+        var frame = deserialize(data['people']);
+        constant.kidnapCases[data['case_number']]?.cars.add(frame);
+        print("===============> 1${constant.kidnapCases[data['case_number']]}");
+        // print("===============> 2${frame.lengt}");
+        constant.updatedCars?.call(() {});
+      },
+    );
+
     socket.on('frame_processed', (data) {
       print(data['success']);
     });
@@ -61,6 +85,18 @@ class SocketService {
     required int caseNumber,
   }) {
     socket.emit('play_video', caseNumber);
+  }
+
+  void showPepole({
+    required int caseNumber,
+  }) {
+    socket.emit('show_people', caseNumber);
+  }
+
+  void showCars({
+    required int caseNumber,
+  }) {
+    socket.emit('show_cars', caseNumber);
   }
 
   void sendToSocket({

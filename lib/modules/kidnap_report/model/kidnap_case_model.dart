@@ -7,6 +7,8 @@ class KidnapCaseModel {
   bool? usedCar;
   String? carNumber;
   List<Uint8List> kidnapVideo = <Uint8List>[];
+  List<Uint8List> persons = <Uint8List>[];
+  List<Uint8List> cars = <Uint8List>[];
 
   KidnapCaseModel({
     required this.caseNumber,
