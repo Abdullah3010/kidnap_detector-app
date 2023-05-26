@@ -5,11 +5,18 @@ import 'package:kidnap_detection_app/modules/camera_view/view/kidnap_camera_view
 import 'package:kidnap_detection_app/modules/kidnap_report/model/kidnap_case_model.dart';
 import 'package:kidnap_detection_app/modules/kidnap_report/view/report_details_screen.dart';
 import 'package:kidnap_detection_app/modules/kidnap_report/view/report_list_screen.dart';
-import 'package:kidnap_detection_app/modules/test_flask/test_flask_screen.dart';
-// ignore: depend_on_referenced_packages, implementation_imports
 import 'package:modular_interfaces/src/route/modular_arguments.dart' show ModularArguments;
 
+
+import '../../modules/camera_view/widgets/video_widget.dart';
+
+
 List<ModularRoute> modularRoutes = <ChildRoute<dynamic>>[
+  ChildRoute<dynamic>(
+    AppRoutes.routes.initScreen,
+    child: (_, ModularArguments args) => GridCameraView(),
+    transition: TransitionType.fadeIn,
+  ),
   // ChildRoute<dynamic>(
   //   AppRoutes.routes.initScreen,
   //   child: (_, ModularArguments args) => TestFlaskScreen(),
@@ -22,7 +29,7 @@ List<ModularRoute> modularRoutes = <ChildRoute<dynamic>>[
   ),
   ChildRoute<dynamic>(
     AppRoutes.routes.kidnapCamerView,
-    child: (_, ModularArguments args) => KidanpCameraView(),
+    child: (_, ModularArguments args) => KidnapCameraView(),
     transition: TransitionType.fadeIn,
   ),
   ChildRoute<dynamic>(

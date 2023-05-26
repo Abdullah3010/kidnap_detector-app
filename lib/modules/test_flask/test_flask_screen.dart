@@ -1,3 +1,4 @@
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -15,7 +16,7 @@ class _TestFlaskScreenState extends State<TestFlaskScreen> {
 
   @override
   void initState() {
-    sNavigation.initSocket();
+    sNavigation.initSocket(context);
     super.initState();
   }
 

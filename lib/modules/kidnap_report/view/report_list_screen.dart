@@ -18,7 +18,7 @@ class _ReportListScrrenState extends State<ReportListScrren> {
   @override
   void initState() {
     constant.updateReportList = setState;
-    sNavigation.initSocket();
+    sNavigation.initSocket(context);
     sNavigation.getAllKidnapCases();
     super.initState();
   }

@@ -1,4 +1,7 @@
 import 'dart:async';
+
+import 'package:provider/provider.dart';
+
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:kidnap_detection_app/core/constant/constant.dart';
 import 'package:kidnap_detection_app/modules/kidnap_report/model/kidnap_case_model.dart';
@@ -6,11 +9,13 @@ import 'package:msgpack_dart/msgpack_dart.dart';
 
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
+import '../../modules/camera_view/controller/kidnap_provider.dart';
+
 class SocketService {
   final Constant constant = Modular.get<Constant>();
   late IO.Socket socket;
   bool init = false;
-  Future<void> initSocket() async {
+  Future<void> initSocket(context) async {
     socket = IO.io('http://localhost:5000', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false,
@@ -18,6 +23,10 @@ class SocketService {
 
     socket.onConnect((_) {
       print('connected to server');
+    });
+
+    socket.on('my_response', (data) {
+      print(data);
     });
 
     socket.on(
@@ -72,6 +81,9 @@ class SocketService {
 
     socket.on('frame_processed', (data) {
       print(data['success']);
+      if (data["success"] == 200) {
+        Provider.of<KidnapResults>(context, listen: false).addNewFrame(data["key"], data["frame_base64"]);
+      }
     });
 
     socket.connect();
