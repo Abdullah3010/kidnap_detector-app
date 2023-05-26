@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:kidnap_detection_app/core/navigation/module.dart';
+
 import 'package:kidnap_detection_app/modules/test_flask/test_flask_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'modules/camera_view/controller/kidnap_provider.dart';
+
+import 'package:kidnap_detection_app/modules/kidnap_report/view/report_list_screen.dart';
+
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
@@ -52,9 +56,8 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp.router(
       title: 'Kidnap Detection App',
       debugShowCheckedModeBanner: false,
-      useInheritedMediaQuery: true,
       builder: (BuildContext context, Widget? child) {
-        return child ?? TestFlaskScreen();
+        return child ?? ReportListScrren();
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

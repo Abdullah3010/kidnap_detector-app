@@ -14,7 +14,7 @@ dependencies:
 
   flutter_localizations:
     sdk: flutter
-  intl: ^0.17.0
+  intl: ^0.18.0
 
   dio: ^4.0.6
   flutter_modular: ^5.0.3
@@ -24,30 +24,32 @@ dependencies:
   export_video_frame: ^0.0.7
   socket_io_client: ^2.0.2
   flutter_screenutil:
+
   provider:
+
+  msgpack_dart:
+
 
 dev_dependencies:
   build_runner:
   flutter_gen_runner:
 
+  # dart_code_metrics: ^5.3.0
+  # lints: ^2.0.1
 
-  dart_code_metrics: ^5.3.0
-  lints: ^2.0.1
+  # mobx_codegen: ^2.1.1
 
-  mobx_codegen: ^2.1.1
+# flutter_gen:
+#   output: lib/core/gen
 
-flutter_gen:
-  output: lib/core/gen
-
-  integrations:
-    flutter_svg: true
-    lottie: true
-
+# integrations:
+#   flutter_svg: true
+#   lottie: true
 
 flutter:
   uses-material-design: true
   generate: true
-  
+
   assets:
     - assets/fonts/
     - assets/videos/
