@@ -1,7 +1,3 @@
-
-import 'dart:convert';
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:kidnap_detection_app/core/services/socket_io.dart';
@@ -18,7 +14,7 @@ class _TestFlaskScreenState extends State<TestFlaskScreen> {
 
   @override
   void initState() {
-    sNavigation.initSocket();
+    sNavigation.initSocket(context);
     super.initState();
   }
 

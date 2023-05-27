@@ -7,7 +7,6 @@ import 'package:kidnap_detection_app/core/constant/constant.dart';
 import 'package:kidnap_detection_app/modules/kidnap_report/model/kidnap_case_model.dart';
 import 'package:msgpack_dart/msgpack_dart.dart';
 
-
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 import '../../modules/camera_view/controller/kidnap_provider.dart';
@@ -17,15 +16,22 @@ class SocketService {
   late IO.Socket socket;
   bool init = false;
   Future<void> initSocket(context) async {
-    socket = IO.io('http://localhost:5000', <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': false,
-    });
+    try {
+      socket = IO.io('http://192.168.1.244:5000', <String, dynamic>{
+        'transports': ['websocket'],
+        'autoConnect': false,
+      });
+    } catch (e) {
+      print(e);
+    }
 
     socket.onConnect((_) {
       print('connected to server');
     });
-
+    socket.onAny((event, data) {
+      print(event);
+      print(data);
+    });
 
     socket.on('my_response', (data) {
       print(data);
@@ -57,11 +63,10 @@ class SocketService {
       },
     );
 
-
     socket.on('frame_processed', (data) {
       print(data['success']);
-      if(data["success"] == 200){
-      Provider.of<KidnapResults>(context , listen: false).addNewFrame(data["key"], data["frame_base64"]);
+      if (data["success"] == 200) {
+        Provider.of<KidnapResults>(context, listen: false).addNewFrame(data["key"], data["frame_base64"]);
       }
     });
 
