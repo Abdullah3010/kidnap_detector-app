@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:video_player/video_player.dart';
-import '../../../core/navigation/routes_names.dart';
 import '../widgets/video_widget.dart';
 
 class GridCameraView extends StatefulWidget {

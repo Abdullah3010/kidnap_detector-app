@@ -3,16 +3,19 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
 class KidnapWidget extends StatefulWidget {
-  String image ;
-  KidnapWidget({Key? key ,required this.image}) : super(key: key);
+  final String image;
+  KidnapWidget({
+    Key? key,
+    required this.image,
+  }) : super(key: key);
 
   @override
   State<KidnapWidget> createState() => _KidnapWidgetState();
 }
 
 class _KidnapWidgetState extends State<KidnapWidget> {
-  int index = 0 ;
-  String currentImage = "assets/kidnap_videos/2/ezgif-frame-001.jpg" ;
+  int index = 0;
+  String currentImage = "assets/kidnap_videos/2/ezgif-frame-001.jpg";
   @override
   void initState() {
     super.initState();
@@ -27,25 +30,22 @@ class _KidnapWidgetState extends State<KidnapWidget> {
     });
      */
   }
+
   @override
   Widget build(BuildContext context) {
-    return  ClipRRect(
+    return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
         height: MediaQuery.of(context).size.height / 2 - 10,
         width: MediaQuery.of(context).size.width / 2 - 10,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.2),
-                spreadRadius: 5,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
-              ),
-            ]
-        ),
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10), boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.2),
+            spreadRadius: 5,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ]),
         child: Image.memory(
           ImageFromBase64String(widget.image),
           fit: BoxFit.cover,
@@ -68,15 +68,11 @@ class _KidnapWidgetState extends State<KidnapWidget> {
                     children: [
                       Text(
                         "Video unavailable",
-                        style: TextStyle(
-                          fontFamily: "Tajawal"
-                        ),
+                        style: TextStyle(fontFamily: "Tajawal"),
                       ),
                       Text(
                         "Something went wrong",
-                        style: TextStyle(
-                            fontFamily: "Tajawal"
-                        ),
+                        style: TextStyle(fontFamily: "Tajawal"),
                       ),
                     ],
                   )
