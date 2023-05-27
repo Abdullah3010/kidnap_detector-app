@@ -19,7 +19,42 @@ class _CarssDetailsState extends State<CarssDetails> {
   final Constant constant = Modular.get<Constant>();
 
   @override
+  void initState() {
+    constant.updatedCars = setState;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("cars Details"),
+      ),
+      body: constant.kidnapCases[widget.caseNumber]?.cars.length == 0
+          ? const Center(
+              child: Text("No cars found"),
+            )
+          : GridView(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 5,
+              ),
+              padding: const EdgeInsets.all(10),
+              children: [
+                ...constant.kidnapCases[widget.caseNumber]!.cars.map(
+                  (e) {
+                    return Container(
+                      width: 100,
+                      height: 100,
+                      padding: const EdgeInsets.all(10),
+                      child: Image.memory(
+                        e,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  },
+                ).toList(),
+              ],
+            ),
+    );
   }
 }

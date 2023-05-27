@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import '../controller/kidnap_provider.dart';
 import '../widgets/kidnap_widget.dart';
 
-
 class KidnapCameraView extends StatefulWidget {
   const KidnapCameraView({Key? key}) : super(key: key);
 
@@ -15,6 +14,15 @@ class _KidnapCameraViewState extends State<KidnapCameraView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Kidnap Detection App'),
+        leading: IconButton(
+          icon: Icon(Icons.dehaze),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+        ),
+      ),
       body: SingleChildScrollView(
         child: Row(
           children: [
@@ -27,8 +35,8 @@ class _KidnapCameraViewState extends State<KidnapCameraView> {
                   spacing: 5,
                   runSpacing: 5,
                   runAlignment: WrapAlignment.spaceAround,
-                  children: Provider.of<KidnapResults>(context , listen: false).images.keys.map((key) {
-                    return KidnapWidget(image : Provider.of<KidnapResults>(context , listen: false).images[key]!.first);
+                  children: Provider.of<KidnapResults>(context, listen: false).images.keys.map((key) {
+                    return KidnapWidget(image: Provider.of<KidnapResults>(context, listen: false).images[key]!.first);
                   }).toList(),
                 ),
               ),

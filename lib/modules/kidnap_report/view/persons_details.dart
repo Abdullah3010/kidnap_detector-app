@@ -19,8 +19,17 @@ class _PersonsDetailsState extends State<PersonsDetails> {
   final Constant constant = Modular.get<Constant>();
 
   @override
+  void initState() {
+    constant.updatedPerson = setState;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Persons Details"),
+      ),
       body: constant.kidnapCases[widget.caseNumber]?.persons.length == 0
           ? const Center(
               child: Text("No persons found"),

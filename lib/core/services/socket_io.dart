@@ -70,17 +70,21 @@ class SocketService {
     socket.on(
       'show_cars',
       (data) {
-        // print("===============> ${data['frame']}");
         var frame = deserialize(data['people']);
         constant.kidnapCases[data['case_number']]?.cars.add(frame);
-        print("===============> 1${constant.kidnapCases[data['case_number']]}");
-        // print("===============> 2${frame.lengt}");
         constant.updatedCars?.call(() {});
       },
     );
 
+    socket.on('Kidnap_detected', (data) {
+      print(data);
+      constant.cameraIdThatHaveCase = data["camera_id"];
+      constant.updatedVideoWidget.forEach((element) {
+        element?.call(() {});
+      });
+    });
+
     socket.on('frame_processed', (data) {
-      print(data['success']);
       if (data["success"] == 200) {
         Provider.of<KidnapResults>(context, listen: false).addNewFrame(data["key"], data["frame_base64"]);
       }

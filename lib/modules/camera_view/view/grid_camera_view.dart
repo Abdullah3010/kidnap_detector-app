@@ -20,12 +20,13 @@ class _GridCameraViewState extends State<GridCameraView> {
   @override
   void initState() {
     getVideos();
-    Modular.to.navigate(AppRoutes.routes.kidnapCamerView);
+    // Modular.to.navigate(AppRoutes.routes.kidnapCamerView);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    int index = 0;
     return Scaffold(
       body: SingleChildScrollView(
         child: Row(
@@ -40,8 +41,10 @@ class _GridCameraViewState extends State<GridCameraView> {
                   runSpacing: 5,
                   runAlignment: WrapAlignment.spaceAround,
                   children: listOfVideos.map((videoPath) {
+                    index++;
                     return VideoWidget(
                       videoPath: videoPath,
+                      id: index,
                     );
                   }).toList(),
                 ),
@@ -49,9 +52,7 @@ class _GridCameraViewState extends State<GridCameraView> {
             ),
             Container(
               child: Column(
-                children: [
-
-                ],
+                children: [],
               ),
             )
           ],
@@ -62,18 +63,20 @@ class _GridCameraViewState extends State<GridCameraView> {
 
   getVideos() async {
     final Map<String, dynamic> assets = jsonDecode(await rootBundle.loadString('AssetManifest.json'));
-    assets.forEach((key, value) {
-      if (value[0].toString().contains("video") == true) {
-        setState(() {
-          listOfVideos.add(value[0]);
-        });
-      }
-    });
+    assets.forEach(
+      (key, value) {
+        if (value[0].toString().contains("video") == true) {
+          print("Video ====> ${value[0]}");
+          setState(() {
+            listOfVideos.add(value[0]);
+          });
+        }
+      },
+    );
   }
 
   getFrames() async {
-    final Map<String, dynamic> assets =
-    jsonDecode(await rootBundle.loadString('AssetManifest.json'));
+    final Map<String, dynamic> assets = jsonDecode(await rootBundle.loadString('AssetManifest.json'));
     assets.forEach((key, value) {
       List path = value.toString().split("/");
       if (path.length == 4) {
