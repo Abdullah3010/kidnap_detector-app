@@ -70,14 +70,12 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    print("===============> 11   ${constant.cameraIdThatHaveCase}");
-    print("===============> 22   ${widget.id}");
     return Container(
       height: MediaQuery.of(context).size.height / 2 - 10,
       width: MediaQuery.of(context).size.width / 2 - 10,
-      padding: EdgeInsets.all(15),
+      padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: constant.cameraIdThatHaveCase == widget.id ? Colors.red : Colors.white,
+        color: constant.cameraIdThatHaveCase == widget.id ? Colors.red : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
