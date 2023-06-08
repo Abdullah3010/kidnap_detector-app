@@ -16,13 +16,21 @@ class SocketService {
   late IO.Socket socket;
   bool init = false;
   Future<void> initSocket(context) async {
-    socket = IO.io('http://localhost:5000', <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': false,
-    });
+    try {
+      socket = IO.io('http://192.168.1.244:5000', <String, dynamic>{
+        'transports': ['websocket'],
+        'autoConnect': false,
+      });
+    } catch (e) {
+      print(e);
+    }
 
     socket.onConnect((_) {
       print('connected to server');
+    });
+    socket.onAny((event, data) {
+      print(event);
+      print(data);
     });
 
     socket.on('my_response', (data) {
@@ -55,36 +63,8 @@ class SocketService {
       },
     );
 
-    socket.on(
-      'show_people',
-      (data) {
-        // print("===============> ${data['frame']}");
-        var frame = deserialize(data['people']);
-        constant.kidnapCases[data['case_number']]?.persons.add(frame);
-        print("===============> 1${constant.kidnapCases[data['case_number']]}");
-        // print("===============> 2${frame.lengt}");
-        constant.updatedPerson?.call(() {});
-      },
-    );
-
-    socket.on(
-      'show_cars',
-      (data) {
-        var frame = deserialize(data['people']);
-        constant.kidnapCases[data['case_number']]?.cars.add(frame);
-        constant.updatedCars?.call(() {});
-      },
-    );
-
-    socket.on('Kidnap_detected', (data) {
-      print(data);
-      constant.cameraIdThatHaveCase = data["camera_id"];
-      constant.updatedVideoWidget.forEach((element) {
-        element?.call(() {});
-      });
-    });
-
     socket.on('frame_processed', (data) {
+      print(data['success']);
       if (data["success"] == 200) {
         Provider.of<KidnapResults>(context, listen: false).addNewFrame(data["key"], data["frame_base64"]);
       }
