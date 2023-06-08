@@ -2,6 +2,9 @@ import 'dart:convert';
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 
+import '../../../core/functions/base64_to_uint.dart';
+import 'error_image.dart';
+
 class KidnapWidget extends StatefulWidget {
   final String image;
   KidnapWidget({
@@ -50,42 +53,12 @@ class _KidnapWidgetState extends State<KidnapWidget> {
           ImageFromBase64String(widget.image),
           fit: BoxFit.cover,
           errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
-            return Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    Icons.info,
-                    size: 40,
-                  ),
-                  SizedBox(
-                    height: 5,
-                    width: 5,
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Video unavailable",
-                        style: TextStyle(fontFamily: "Tajawal"),
-                      ),
-                      Text(
-                        "Something went wrong",
-                        style: TextStyle(fontFamily: "Tajawal"),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            );
+            return ErrorImage();
           },
         ),
       ),
     );
   }
 
-  Uint8List ImageFromBase64String(String base64String) {
-    return Base64Decoder().convert(base64String);
-  }
+
 }

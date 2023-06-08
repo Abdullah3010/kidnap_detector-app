@@ -15,7 +15,7 @@ class CarssDetails extends StatefulWidget {
 }
 
 class _CarssDetailsState extends State<CarssDetails> {
-  final SocketService sNavigation = Modular.get<SocketService>();
+  // final SocketService sNavigation = Modular.get<SocketService>();
   final Constant constant = Modular.get<Constant>();
 
   @override
@@ -46,7 +46,7 @@ class _CarssDetailsState extends State<CarssDetails> {
                       width: 100,
                       height: 100,
                       padding: const EdgeInsets.all(10),
-                      child: Image.memory(
+                      child: Image.asset(
                         e,
                         fit: BoxFit.cover,
                       ),

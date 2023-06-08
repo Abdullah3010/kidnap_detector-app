@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer' as dev;
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -13,11 +14,10 @@ import 'package:video_player_win/video_player_win.dart';
 
 class VideoWidget extends StatefulWidget {
   final String videoPath;
-  final int id;
-  VideoWidget({
-    required this.videoPath,
-    required this.id,
-  });
+  final int VideoId;
+  double height;
+  double width;
+  VideoWidget({required this.videoPath, required this.VideoId, required this.width, required this.height});
   @override
   _VideoWidgetState createState() => _VideoWidgetState();
 }
@@ -26,7 +26,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   WinVideoPlayerController? _controller;
   late IO.Socket socket;
   bool isInitialized = false;
-  final SocketService service = Modular.get<SocketService>();
+  // final SocketService service = Modular.get<SocketService>();
   final Constant constant = Modular.get<Constant>();
   ScreenshotController screenshotController = ScreenshotController();
   Timer? _timer;
@@ -36,7 +36,7 @@ class _VideoWidgetState extends State<VideoWidget> {
   void initState() {
     constant.updatedVideoWidget.add(setState);
     initVideo();
-    service.initSocket(context);
+    // service.initSocket(context);
     super.initState();
   }
 
@@ -71,11 +71,11 @@ class _VideoWidgetState extends State<VideoWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height / 2 - 10,
+      height: MediaQuery.of(context).size.height / 2 - 40,
       width: MediaQuery.of(context).size.width / 2 - 10,
       padding: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: constant.cameraIdThatHaveCase == widget.id ? Colors.red : Colors.transparent,
+        color: constant.cameraIdThatHaveCase == widget.VideoId ? Colors.red : Colors.transparent,
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
           BoxShadow(
@@ -112,7 +112,7 @@ class _VideoWidgetState extends State<VideoWidget> {
                           print("Completed");
                           _timer!.cancel();
                         } else {
-                          sendFrame();
+                          // sendFrame();
                         }
 
                         // _videoListener();
@@ -148,18 +148,18 @@ class _VideoWidgetState extends State<VideoWidget> {
     super.dispose();
   }
 
-  sendFrame() async {
-    try {
-      screenshotController.capture().then((Uint8List? image) {
-        service.sendToSocket(event: 'frame', message: {
-          'camera_id': widget.id,
-          'frame': base64.encode(image ?? []),
-        });
-      }).catchError((onError) {
-        print(onError);
-      });
-    } catch (e) {
-      dev.log(e.toString());
-    }
-  }
+  // sendFrame() async {
+  //   try {
+  //     screenshotController.capture().then((Uint8List? image) {
+  //       service.sendToSocket(event: 'frame', message: {
+  //         'camera_id': widget.VideoId,
+  //         'frame': base64.encode(image ?? []),
+  //       });
+  //     }).catchError((onError) {
+  //       print(onError);
+  //     });
+  //   } catch (e) {
+  //     dev.log(e.toString());
+  //   }
+  // }
 }

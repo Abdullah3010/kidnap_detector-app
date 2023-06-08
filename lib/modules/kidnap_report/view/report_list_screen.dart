@@ -12,14 +12,14 @@ class ReportListScrren extends StatefulWidget {
 }
 
 class _ReportListScrrenState extends State<ReportListScrren> {
-  final SocketService sNavigation = Modular.get<SocketService>();
+  // final SocketService sNavigation = Modular.get<SocketService>();
   final Constant constant = Modular.get<Constant>();
 
   @override
   void initState() {
     constant.updateReportList = setState;
-    sNavigation.initSocket(context);
-    sNavigation.getAllKidnapCases();
+    // sNavigation.initSocket(context);
+    // sNavigation.getAllKidnapCases();
     super.initState();
   }
 

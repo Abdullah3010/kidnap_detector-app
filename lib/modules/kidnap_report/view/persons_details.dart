@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:kidnap_detection_app/core/constant/constant.dart';
 import 'package:kidnap_detection_app/core/services/socket_io.dart';
+
+import '../../camera_view/widgets/error_image.dart';
 
 class PersonsDetails extends StatefulWidget {
   final int caseNumber;
@@ -15,7 +18,7 @@ class PersonsDetails extends StatefulWidget {
 }
 
 class _PersonsDetailsState extends State<PersonsDetails> {
-  final SocketService sNavigation = Modular.get<SocketService>();
+  // final SocketService sNavigation = Modular.get<SocketService>();
   final Constant constant = Modular.get<Constant>();
 
   @override
@@ -26,35 +29,66 @@ class _PersonsDetailsState extends State<PersonsDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Persons Details"),
-      ),
-      body: constant.kidnapCases[widget.caseNumber]?.persons.length == 0
-          ? const Center(
-              child: Text("No persons found"),
-            )
-          : GridView(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 5,
+    return Expanded(
+      flex: 3,
+      child: Container(
+        child: SizedBox(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Persons",
+                  style: GoogleFonts.acme(
+                      fontSize: 20
+                  ),
+                ),
               ),
-              padding: const EdgeInsets.all(10),
-              children: [
-                ...constant.kidnapCases[widget.caseNumber]!.persons.map(
-                  (e) {
-                    return Container(
-                      width: 100,
-                      height: 100,
-                      padding: const EdgeInsets.all(10),
-                      child: Image.memory(
-                        e,
-                        fit: BoxFit.cover,
-                      ),
-                    );
-                  },
-                ).toList(),
-              ],
-            ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: LayoutBuilder(
+                    builder: (context , constrains){
+                      return  Wrap(
+                        alignment: WrapAlignment.center,
+                        direction: Axis.horizontal,
+                        spacing: 5,
+                        runSpacing: 5,
+                        runAlignment: WrapAlignment.spaceAround,
+                        children: constant.kidnapCases[widget.caseNumber]!.persons.map((e) {
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.grey.withOpacity(0.2),
+                                      spreadRadius: 5,
+                                      blurRadius: 7,
+                                      offset: Offset(0, 3), // changes position of shadow
+                                    ),
+                                  ]
+                              ),
+                              child: Image.asset(
+                                e,
+                                errorBuilder: (BuildContext context, Object exception, StackTrace? stackTrace) {
+                                  return ErrorImage();
+                                },
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      );
+                    },
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
